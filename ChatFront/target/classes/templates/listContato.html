@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th='http://www.thymeleaf.org'>
+
+<head>
+	<title>Lista de Contatos</title>
+	<meta http-equip='Content-Type' content='text/html; charset = UTF8' />
+	<style>
+
+
+		.nav-bar {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+		}
+
+		h1 {
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		.btn_adicionar {
+			padding: 5px 10px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-left: 150px;
+		}
+		table {
+			width: 80%;
+			margin: 0 auto;
+			border-collapse: collapse;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			text-align: left;
+		}
+
+		.align-middle {
+			vertical-align: middle;
+		}
+
+		.btn_excluir {
+			padding: 5px 10px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		.btn_alterar {
+			padding: 5px 10px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="nav-bar">
+		<h1>Lista de Contatos</h1>
+		<form action="#" th:action="@{'/contato/new'}" th:method="get">
+			<button type="submit" class="btn_adicionar">Novo Contato</button>
+		</form>
+	</div>
+	<div th:unless='${#lists.isEmpty(contatos)}'>
+		<table>
+			<tr>
+				<th>Nome</th>
+				<th>Email</th>
+				<th>Telefone</th>
+				<th>Endereço</th>
+				<th></th>
+				<th></th>
+			</tr>
+			<tr th:each="contato : ${contatos}">
+				<td class="align-middle" th:text="${contato.nome}"></td>
+				<td class="align-middle" th:text="${contato.email}"></td>
+				<td class="align-middle" th:text="${contato.telefone}"></td>
+				<td class="align-middle" th:text="${contato.endereco}"></td>
+				<td class="align-middle">
+					<form action="#" th:action="@{'/contato/{id}'(id=${contato.id})}" th:method="delete">
+						<button type="submit" class="btn_excluir">Excluir</button>
+					</form>
+				</td>
+				<td class="align-middle">
+					<form action="#" th:action="@{'/contato/change/{id}'(id=${contato.id})}" th:method="put">
+						<button type="submit" class="btn_alterar">Alterar</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>

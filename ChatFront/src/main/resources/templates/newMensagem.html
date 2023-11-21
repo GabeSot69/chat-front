@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<title>Nova Mensagem</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style>
+		form {
+			width: 50%;
+			margin: 0 auto;
+			padding: 20px;
+			border-radius: 8px;
+		}
+
+		label {
+			display: block;
+			text-align: left;
+		}
+
+		input[type="text"] {
+			width: 100%;
+			padding: 5px;
+			margin: 10px 0;
+			border-radius: 4px;
+		}
+
+		input[type="submit"] {
+			padding: 10px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+	</style>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var mensagensVazias = document.querySelectorAll(".mensagem_vazia");
+			setTimeout(function () {
+				mensagensVazias.forEach(function (vazio) {
+					vazio.style.display = "none";
+				});
+			}, 5000);
+		});
+
+		document.addEventListener("DOMContentLoaded", function () {
+			var dataHoraInput = document.getElementById("datahora");
+			var dataHoraAtual = new Date().toISOString().slice(0, 19).replace("T", " ");
+			dataHoraInput.value = dataHoraAtual;
+		});
+	</script>
+</head>
+
+<body>
+	<h1>Nova Mensagem</h1>
+	<form action="#" th:action="@{/mensagem}" th:object="${mensagem}" th:method="post">
+		<label for="emissor">Emissor</label>
+		<input type="text" th:field="*{emissor.id}" id="conteudo" placeholder="Emissor">
+		<span class="mensagem_vazia" th:if="${#fields.hasErrors('emissor.id')}" th:errors="*{emissor.id}"></span>
+		<br>
+
+		<label for="conteudo">Conteúdo</label>
+		<input type="text" th:field="*{conteudo}" id="conteudo" placeholder="Conteúdo">
+		<span class="mensagem_vazia" th:if="${#fields.hasErrors('conteudo')}" th:errors="*{conteudo}"></span>
+		<br>
+
+		<label for="receptor">Receptor</label>
+		<input type="text" th:field="*{receptor.id}" id="conteudo" placeholder="Receptor">
+		<span class="mensagem_vazia" th:if="${#fields.hasErrors('receptor.id')}" th:errors="*{receptor.id}"></span>
+		<br>
+
+		<label for="datahora">Data e Hora</label>
+		<input type="datetime-local" th:field="*{datahora}" id="datahora" placeholder="Data e Hora" readonly>
+		<span class="mensagem_vazia" th:if="${#fields.hasErrors('datahora')}" th:errors="*{datahora}"></span>
+		<br>
+		<br>
+
+		<input type="submit" value="Enviar Mensagem">
+	</form>
+</body>
+
+</html>
